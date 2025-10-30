@@ -14,9 +14,9 @@ function App() {
       <BrowserRouter>
         <header style={{display:'flex',gap:16,padding:12,borderBottom:'1px solid #eee'}}>
           <b>Notes</b>
-          <Link to="/">Activas</Link>
-          <Link to="/archived">Archivadas</Link>
-          <Link to="/new">Nueva</Link>
+          <Link to="/">Active</Link>
+          <Link to="/archived">Archived</Link>
+          <Link to="/new">New Note</Link>
         </header>
         <Routes>
           <Route path="/" element={<NotesList archived={false} />} />

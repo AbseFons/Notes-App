@@ -38,12 +38,12 @@ export default function EditNote({ isNew = false }: { isNew?: boolean }) {
 
   return (
     <form onSubmit={onSubmit} style={{display:'grid', gap:8, padding:16}}>
-      <h3>{isNew ? 'Nueva nota' : 'Editar nota'}</h3>
-      <input placeholder="Título" value={title} onChange={e=>setTitle(e.target.value)} required />
-      <textarea placeholder="Contenido" value={content} onChange={e=>setContent(e.target.value)} rows={8} />
+      <h3>{isNew ? 'New note' : 'Edit note'}</h3>
+      <input placeholder="Note tittle" value={title} onChange={e=>setTitle(e.target.value)} required />
+      <textarea placeholder="Content" value={content} onChange={e=>setContent(e.target.value)} rows={8} />
       <div style={{display:'flex', gap:8}}>
-        <button type="submit">Guardar</button>
-        <button type="button" onClick={()=>nav(-1)}>Cancelar</button>
+        <button type="submit">Save</button>
+        <button type="button" onClick={()=>nav(-1)}>Cancel</button>
       </div>
     </form>
   )
