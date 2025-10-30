@@ -1,18 +1,20 @@
-# Usa una base Debian moderna con OpenSSL listo
 FROM node:20-bookworm-slim
 
 WORKDIR /app
 
-# Instala dependencias del proyecto
+# ✅ agrega OpenSSL para que Prisma no falle
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends openssl ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+
 COPY package.json ./
 RUN npm i --silent
 
-# Copia config y código
 COPY tsconfig.json ./
 COPY prisma ./prisma
 COPY src ./src
 
-# Genera el cliente de Prisma
+# Genera cliente Prisma en build
 RUN npx prisma generate
 
 EXPOSE 3000

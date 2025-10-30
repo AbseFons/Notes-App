@@ -7,6 +7,7 @@ docker compose build
 
 echo "==> Levantando servicios..."
 docker compose up -d db
+
 # Espera simple a que db acepte conexiones
 echo "Esperando a Postgres..."
 until docker compose exec -T db pg_isready -U notes -h localhost >/dev/null 2>&1; do

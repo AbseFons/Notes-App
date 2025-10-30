@@ -8,6 +8,6 @@ async function main() {
       { title: 'Archivada', content: 'Ejemplo', archived: true },
     ],
   });
-  console.log('✅ Seed ok');
+  console.log('Seed ok');
 }
 main().finally(() => prisma.$disconnect());
