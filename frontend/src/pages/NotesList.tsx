@@ -33,7 +33,7 @@ export default function NotesList({ archived }: { archived: boolean }) {
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <b>{n.title}</b>
 
-                {/* Chip de estado */}
+                {/* Chip*/}
                 {n.archived ? (
                   <span
                     style={{
