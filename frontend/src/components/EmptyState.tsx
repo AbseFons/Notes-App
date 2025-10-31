@@ -12,7 +12,7 @@ export function EmptyState({ archived }: { archived?: boolean }) {
         </Text>
         {!archived && (
           <Button as={Link} to="/new" variant="primary">
-            Nueva nota
+            New Note
           </Button>
         )}
       </VStack>

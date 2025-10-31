@@ -16,13 +16,13 @@ export function Header() {
           <Heading size="md">Notes</Heading>
           <Tabs index={index} onChange={(i)=>navigate(i===0?'/':'/archived')}>
             <TabList>
-              <Tab>Activas</Tab>
-              <Tab>Archivadas</Tab>
+              <Tab>Active</Tab>
+              <Tab>Archived</Tab>
             </TabList>
           </Tabs>
           <Spacer />
           <HStack spacing={2}>
-            <Button as={Link} to="/new" variant="primary" size="sm">Nueva nota</Button>
+            <Button as={Link} to="/new" variant="primary" size="sm">New Note</Button>
             <ThemeToggle />
           </HStack>
         </Flex>

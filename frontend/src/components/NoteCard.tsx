@@ -36,17 +36,17 @@ export function NoteCard(props: NoteCardProps) {
     >
       <Flex align="baseline" gap={3}>
         <Heading as="h3" size="md" noOfLines={1}>{title}</Heading>
-        <Badge variant={archived ? 'stateArchived' : 'stateActive'}>{archived ? 'Archivada' : 'Activa'}</Badge>
+        <Badge variant={archived ? 'stateArchived' : 'stateActive'}>{archived ? 'Archived' : 'Active'}</Badge>
         <Spacer />
         <HStack spacing={2}>
           <Button size="sm" variant="ghost" onClick={onToggleArchive}>
-            {archived ? 'Desarchivar' : 'Archivar'}
+            {archived ? 'Unarchive' : 'Archive'}
           </Button>
           <Button as={Link} to={`/edit/${id}`} size="sm" variant="ghost">
-            Editar
+            Edit
           </Button>
           <Button size="sm" variant="danger" onClick={onDelete}>
-            Eliminar
+            Delete
           </Button>
         </HStack>
       </Flex>
@@ -58,8 +58,8 @@ export function NoteCard(props: NoteCardProps) {
       )}
 
       <Text mt={3} fontSize="xs" color="muted">
-        creada {relativeTime(createdAt)}
-        {updatedAt !== createdAt && <> · actualizada {relativeTime(updatedAt)}</>}
+        created {relativeTime(createdAt)}
+        {updatedAt !== createdAt && <> · updated {relativeTime(updatedAt)}</>}
       </Text>
     </Box>
   )

@@ -1,5 +1,9 @@
 import { extendTheme, ThemeConfig } from '@chakra-ui/react'
 
+import { Button as ButtonTheme } from './components/button'
+import { Badge as BadgeTheme } from './components/badge'
+import { Tabs as TabsTheme } from './components/tabs'
+
 const config: ThemeConfig = {
   initialColorMode: 'system',
   useSystemColorMode: true,
@@ -77,6 +81,11 @@ export const foundations = {
 export const theme = extendTheme({
   config,
   ...foundations,
+  components: {
+    Button: ButtonTheme,
+    Badge: BadgeTheme,
+    Tabs: TabsTheme,
+  },
   styles: {
     global: {
       'html, body, #root': { height: '100%' },
