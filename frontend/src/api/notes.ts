@@ -9,8 +9,17 @@ export interface Note {
   updatedAt: string
 }
 
-export async function listNotes(params: { archived?: boolean, tag?: string } = {}) {
-  const res = await api.get<Note[]>('/notes', { params })
+export interface ListParams {
+  archived: boolean
+  tag?: string
+  q?: string
+}
+
+export async function listNotes({ archived, tag, q }: ListParams) {
+  const params: Record<string, any> = { archived }
+  if (tag) params.tag = tag
+  if (q) params.q = q
+  const res = await api.get('/notes', { params })
   return res.data
 }
 

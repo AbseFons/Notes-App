@@ -12,13 +12,32 @@ export class NotesService {
     return this.prisma.note.create({ data });
   }
 
-  async findAll(archived?: boolean, tag?: string): Promise<Note[]> {
+  async findAll(params: { archived: boolean; q?: string; tag?: string }) {
+    const { archived, q, tag } = params;
+
+    const where: any = { archived };
+
+    if (q && q.trim() !== '') {
+      where.AND = (where.AND ?? []).concat({
+        OR: [
+          { title: { contains: q, mode: 'insensitive' } },
+          { content: { contains: q, mode: 'insensitive' } },
+        ],
+      });
+    }
+
+    if (tag && tag.trim() !== '') {
+      where.AND = (where.AND ?? []).concat({
+        tags: {
+          some: { tag: { name: tag } }, 
+        },
+      });
+    }
+
     return this.prisma.note.findMany({
-      where: {
-        archived: archived,
-        ...(tag ? { tags: { some: { tag: { name: tag } } } } : {})
-      },
-      orderBy: { createdAt: 'desc' }
+      where,
+      orderBy: { createdAt: 'desc' },
+      include: { tags: { include: { tag: true } } },
     });
   }
 
@@ -45,7 +64,6 @@ export class NotesService {
   }
 
   async addTags(id: number, names: string[]) {
-    // crea relaciones NoteTag, conectando o creando cada Tag por su name (único)
     return this.prisma.note.update({
       where: { id },
       data: {
@@ -53,7 +71,7 @@ export class NotesService {
           create: names.map((name) => ({
             tag: {
               connectOrCreate: {
-                where: { name },       // Tag.name es único en schema
+                where: { name },
                 create: { name }
               }
             }

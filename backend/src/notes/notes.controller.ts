@@ -7,7 +7,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('notes')
 @Controller('notes')
 export class NotesController {
-  constructor(private readonly notesService: NotesService) {}
+  constructor(private readonly notesService: NotesService) { }
 
   @Post()
   create(@Body() dto: CreateNoteDto) {
@@ -15,10 +15,16 @@ export class NotesController {
   }
 
   @Get()
-  findAll(@Query('archived') archived?: string, @Query('tag') tag?: string) {
-    const flag = archived === undefined ? undefined : archived === 'true';
-    return this.notesService.findAll(flag, tag);
+  findAll(
+    @Query('archived') archived: string,
+    @Query('q') q?: string,
+    @Query('tag') tag?: string,
+  ) {
+    // archived viene como "true"/"false"
+    const archivedBool = String(archived) === 'true';
+    return this.notesService.findAll({ archived: archivedBool, q, tag });
   }
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {
