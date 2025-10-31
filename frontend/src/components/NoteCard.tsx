@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Box, Flex, Heading, Text, HStack, Spacer, Badge, Button, useColorModeValue
+  Box, Flex, Heading, Text, Badge, Button, useColorModeValue
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { relativeTime } from '../api/time'
@@ -26,41 +26,47 @@ export function NoteCard(props: NoteCardProps) {
   return (
     <Box
       as="article"
-      bg={cardBg}
-      border={border}
-      borderColor={borderColor}
+      bg="surface"
+      border="1px solid"
+      borderColor={{ base: 'border', _dark: 'whiteAlpha.200' }}   // borde sutil en dark
       borderRadius="md"
       p={4}
       transition="all 0.15s ease-out"
-      _hover={{ transform: 'translateY(-2px)', boxShadow: 'md', bg: hoverBg }}
+      boxShadow={{ base: 'sm', _dark: 'none' }}                    // sombra ligera en light
+      _hover={{ transform: 'translateY(-2px)', boxShadow: 'md', bg: 'rgba(0,0,0,0.02)' }}
+      _dark={{ _hover: { bg: 'whiteAlpha.50' } }}                  // hover sutil en dark
     >
-      <Flex align="baseline" gap={3}>
-        <Heading as="h3" size="md" noOfLines={1}>{title}</Heading>
-        <Badge variant={archived ? 'stateArchived' : 'stateActive'}>{archived ? 'Archived' : 'Active'}</Badge>
-        <Spacer />
-        <HStack spacing={2}>
-          <Button size="sm" variant="ghost" onClick={onToggleArchive}>
-            {archived ? 'Unarchive' : 'Archive'}
-          </Button>
-          <Button as={Link} to={`/edit/${id}`} size="sm" variant="ghost">
-            Edit
-          </Button>
-          <Button size="sm" variant="danger" onClick={onDelete}>
-            Delete
-          </Button>
-        </HStack>
+      <Flex align="flex-start" gap={3} mb={2}>
+        <Heading as="h3" size="md" noOfLines={1} flex="1" fontWeight={600}>
+          {title}
+        </Heading>
+        <Badge variant={archived ? 'stateArchived' : 'stateActive'} mt="1px">
+          {archived ? 'Archivada' : 'Activa'}
+        </Badge>
       </Flex>
 
       {content && (
-        <Text mt={2} noOfLines={3} color="muted">
+        <Text mt={1} noOfLines={3} color="muted" fontSize="sm">
           {content}
         </Text>
       )}
 
       <Text mt={3} fontSize="xs" color="muted">
-        created {relativeTime(createdAt)}
-        {updatedAt !== createdAt && <> · updated {relativeTime(updatedAt)}</>}
+        creada {relativeTime(createdAt)}
+        {updatedAt !== createdAt && <> · actualizada {relativeTime(updatedAt)}</>}
       </Text>
+
+      <Flex mt={3} gap={2} wrap="wrap">
+        <Button size="sm" variant="ghost" onClick={onToggleArchive}>
+          {archived ? 'Desarchivar' : 'Archivar'}
+        </Button>
+        <Button as={Link} to={`/edit/${id}`} size="sm" variant="ghost">
+          Editar
+        </Button>
+        <Button size="sm" variant="outline" colorScheme="red" onClick={onDelete}>
+          Eliminar
+        </Button>
+      </Flex>
     </Box>
   )
 }
