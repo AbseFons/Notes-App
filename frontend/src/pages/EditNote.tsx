@@ -2,49 +2,62 @@ import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createNote, getNote, updateNote } from '../api/notes'
+import { Heading, Stack, useToast, Box, Text } from '@chakra-ui/react'
+import { NoteForm, NoteFormValues } from '../components/NoteForm'
 
 export default function EditNote({ isNew = false }: { isNew?: boolean }) {
   const { id } = useParams()
-  const nav = useNavigate()
+  const navigate = useNavigate()
   const qc = useQueryClient()
+  const toast = useToast()
+
   const { data } = useQuery({
     queryKey: ['note', id],
     queryFn: () => getNote(Number(id)),
     enabled: !isNew && !!id
   })
 
-  const [title, setTitle] = React.useState('')
-  const [content, setContent] = React.useState('')
-
-  useEffect(()=>{
-    if (data) { setTitle(data.title); setContent(data.content ?? '') }
-  }, [data])
-
   const saveNew = useMutation({
-    mutationFn: () => createNote({ title, content }),
-    onSuccess: () => { qc.invalidateQueries({queryKey:['notes']}); nav('/') }
+    mutationFn: (values: NoteFormValues) => createNote(values),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['notes'] })
+      toast({ status: 'success', title: 'Note created' })
+      navigate('/')
+    },
+    onError: () => toast({ status: 'error', title: 'Note not created' })
   })
 
   const saveExisting = useMutation({
-    mutationFn: () => updateNote(Number(id), { title, content }),
-    onSuccess: () => { qc.invalidateQueries({queryKey:['notes']}); nav('/') }
+    mutationFn: (values: NoteFormValues) => updateNote(Number(id), values),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['notes'] })
+      toast({ status: 'success', title: 'Note updated' })
+      navigate('/')
+    },
+    onError: () => toast({ status: 'error', title: 'Note not updated' })
   })
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (isNew) saveNew.mutate()
-    else saveExisting.mutate()
-  }
+  const defaultValues: NoteFormValues | undefined = !isNew && data
+    ? { title: data.title, content: data.content ?? '' }
+    : undefined
 
   return (
-    <form onSubmit={onSubmit} style={{display:'grid', gap:8, padding:16}}>
-      <h3>{isNew ? 'New note' : 'Edit note'}</h3>
-      <input placeholder="Note tittle" value={title} onChange={e=>setTitle(e.target.value)} required />
-      <textarea placeholder="Content" value={content} onChange={e=>setContent(e.target.value)} rows={8} />
-      <div style={{display:'flex', gap:8}}>
-        <button type="submit">Save</button>
-        <button type="button" onClick={()=>nav(-1)}>Cancel</button>
-      </div>
-    </form>
+    <Stack spacing={4} align="stretch">
+      <Heading size="md" mb={2}>
+        {isNew ? 'New note' : 'Edit note'}
+      </Heading>
+      <Text color="muted" fontSize="sm">Create a new note to organize your ideas. </Text>
+      <Box maxW="99%">
+        <NoteForm
+          defaultValues={defaultValues}
+          onSubmit={(values) => {
+            if (isNew) saveNew.mutate(values)
+            else saveExisting.mutate(values)
+          }}
+          isSubmitting={isNew ? saveNew.isPending : saveExisting.isPending}
+          onCancel={() => navigate(-1)}
+        />
+      </Box>
+    </Stack>
   )
 }

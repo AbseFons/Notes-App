@@ -4,6 +4,7 @@ import {
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { relativeTime } from '../api/time'
+import { FiArchive, FiEdit2, FiTrash2 } from 'react-icons/fi'
 
 export interface NoteCardProps {
   id: number
@@ -27,44 +28,65 @@ export function NoteCard(props: NoteCardProps) {
     <Box
       as="article"
       bg="surface"
-      border="1px solid"
-      borderColor={{ base: 'border', _dark: 'whiteAlpha.200' }}   // borde sutil en dark
-      borderRadius="md"
+      borderWidth="1px"
+      borderStyle="solid"
+
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+      sx={{
+        borderColor: 'border !important',
+        _dark: {
+          borderColor: 'border !important'
+        },
+      }}
+      borderRadius="2xl"
+      minH="200px"
       p={4}
       transition="all 0.15s ease-out"
-      boxShadow={{ base: 'sm', _dark: 'none' }}                    // sombra ligera en light
-      _hover={{ transform: 'translateY(-2px)', boxShadow: 'md', bg: 'rgba(0,0,0,0.02)' }}
-      _dark={{ _hover: { bg: 'whiteAlpha.50' } }}                  // hover sutil en dark
+      boxShadow={{ base: 'sm', _dark: 'none' }}
+      _hover={{
+        transform: 'translateY(-2px)',
+        boxShadow: 'md',
+        bg: { base: 'rgba(0,0,0,0.02)', _dark: 'whiteAlpha.50' },
+      }}
     >
-      <Flex align="flex-start" gap={3} mb={2}>
-        <Heading as="h3" size="md" noOfLines={1} flex="1" fontWeight={600}>
+      <Flex align="flex-start" gap={3} mb={3}>
+        <Heading as="h3" size="md" noOfLines={1} flex="1" fontWeight={700} color="text_card">
           {title}
         </Heading>
         <Badge variant={archived ? 'stateArchived' : 'stateActive'} mt="1px">
-          {archived ? 'Archivada' : 'Activa'}
+          {archived ? 'Archived' : 'Active'}
         </Badge>
       </Flex>
 
       {content && (
-        <Text mt={1} noOfLines={3} color="muted" fontSize="sm">
+        <Text mt={0} noOfLines={3} color="muted" fontSize="sm">
           {content}
         </Text>
       )}
 
-      <Text mt={3} fontSize="xs" color="muted">
-        creada {relativeTime(createdAt)}
-        {updatedAt !== createdAt && <> · actualizada {relativeTime(updatedAt)}</>}
+      <Text mt={10} fontSize="xs" color="muted_2">
+        Created {relativeTime(createdAt)}
+        {updatedAt !== createdAt && <> · Updated {relativeTime(updatedAt)}</>}
       </Text>
 
       <Flex mt={3} gap={2} wrap="wrap">
-        <Button size="sm" variant="ghost" onClick={onToggleArchive}>
-          {archived ? 'Desarchivar' : 'Archivar'}
+        <Button size={{ base: 'xs', md: 'sm' }} variant="ghost" color="muted_2" leftIcon={<FiArchive />} onClick={onToggleArchive}>
+          {archived ? 'Unarchive' : 'Archive'}
         </Button>
-        <Button as={Link} to={`/edit/${id}`} size="sm" variant="ghost">
-          Editar
+        <Button as={Link} to={`/edit/${id}`} size={{ base: 'xs', md: 'sm' }} variant="ghost" color="muted_2" leftIcon={<FiEdit2 />}>
+          Edit
         </Button>
-        <Button size="sm" variant="outline" colorScheme="red" onClick={onDelete}>
-          Eliminar
+        <Button
+          size={{ base: 'xs', md: 'sm' }}
+          variant="ghost"
+          color="primary.200"
+          leftIcon={<FiTrash2 />}
+          _hover={{ bg: 'primary.50', _dark: { bg: 'red.900' } }}
+          onClick={onDelete}
+        >
+          Delete
         </Button>
       </Flex>
     </Box>

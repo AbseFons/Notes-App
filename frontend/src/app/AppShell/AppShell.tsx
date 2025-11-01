@@ -6,7 +6,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <Box minH="100vh" bg="bg">
       <Header />
-      <Container maxW="6xl" px={{ base: 4, md: 6 }} py={6}>
+      <Container maxW="7xl" px={{ base: 4, md: 8 }} py={6}>
         {children}
       </Container>
     </Box>

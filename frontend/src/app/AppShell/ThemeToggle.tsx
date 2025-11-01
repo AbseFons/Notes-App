@@ -5,11 +5,11 @@ export function ThemeToggle() {
   const { colorMode, toggleColorMode } = useColorMode()
   return (
     <IconButton
-      aria-label="Cambiar tema"
+      aria-label="Change theme"
       onClick={toggleColorMode}
       variant="ghost"
       size="sm"
-      title={colorMode === 'light' ? 'Cambiar a oscuro' : 'Cambiar a claro'}
+      title={colorMode === 'light' ? 'Changing to Dark Theme' : 'Changing to Light Teme'}
       icon={<span>{colorMode === 'light' ? '🌙' : '☀️'}</span>}
     />
   )

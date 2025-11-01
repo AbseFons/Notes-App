@@ -38,7 +38,7 @@ export default function NotesList({ archived }: { archived: boolean }) {
   return (
     <>
       <Toolbar archived={archived} q={q} onQChange={setQ} tag={tag} onTagChange={setTag} count={data.length} />
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4}>
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={{ base: 4, lg: 5 }}>
         {data.map(n => (
           <NoteCard
             key={n.id}

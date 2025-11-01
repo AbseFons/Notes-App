@@ -13,17 +13,23 @@ export const Button = defineStyleConfig({
   },
   variants: {
     primary: {
-      bg: 'primary.600',
+      bg: 'success.200',
       color: 'white',
-      _hover: { bg: 'primary.700' },
-      _active: { bg: 'primary.800' },
+      _hover: { bg: 'accent.500', boxShadow: 'sm' },
+      _active: { bg: 'accent.600' },
     },
     ghost: {
       bg: 'transparent',
-      _hover: { bg: 'surface' },
-      _active: { bg: 'surface' },
       border: '1px solid',
-      borderColor: 'border',
+      borderColor: 'border_2',
+      _hover: {
+        bg: 'primary.50',
+        _dark: { bg: 'whiteAlpha.100' }, 
+      },
+      _active: {
+        bg: 'bg',
+        _dark: { bg: 'whiteAlpha.200' },  
+      },
     },
     danger: {
       bg: 'danger.600',

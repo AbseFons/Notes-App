@@ -9,16 +9,16 @@ export const Badge = defineStyleConfig({
   },
   variants: {
     stateActive: {
-      bg: 'green.50',
-      color: 'green.700',
-      _dark: { bg: 'green.900', color: 'green.100' },
-      px: 2, py: 0.5, fontSize: 'xs', // ⬅ más pequeño
+      bg: 'success.10',
+      color: 'success.200',
+      _dark: { bg: 'success.700', color: 'success.50' },
+      px: 3, py: 1, fontSize: 'xs',
     },
     stateArchived: {
-      bg: 'gray.100',
-      color: 'gray.600',
-      _dark: { bg: 'whiteAlpha.200', color: 'gray.300' },
-      px: 2, py: 0.5, fontSize: 'xs',
+      bg: 'primary.50',
+      color: 'primary.500',
+      _dark: { bg: 'primary.200', color: 'gray.700' },
+      px: 3, py: 1, fontSize: 'xs',
     },
     tagSubtle: {
       bg: 'surface',

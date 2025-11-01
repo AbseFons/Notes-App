@@ -28,54 +28,87 @@ export const foundations = {
   semanticTokens: {
     colors: {
       bg: {
-        default: '#f7f7f8',
-        _dark: '#0f1115',
+        default: 'rgba(242, 230, 192, 0.35)',       // Amarillo crema 
+        _dark: '#0E1A1B',         
       },
       surface: {
-        default: '#ffffff',
-        _dark: '#151923',
+        default: '#ffc48d35',
+        _dark: '#4a403a75',
+      },
+      surface_nn: {
+        default: '#fff7eed1',
+        _dark: '#4a403a75',
       },
       border: {
-        default: '#e6e6e8',
-        _dark: '#1f2430',
+        default: '#c2bda938',       
+        _dark: '#1B1E2A',
+      },
+      border_2: {
+        default: '#7b786a73',       
+        _dark: '#aeb0b95c',
       },
       text: {
-        default: '#1a1a1b',
-        _dark: '#e5e7eb',
+        default: '#4aa7a5c9',
+        _dark: '#faf5c2fe',
+      },
+      text_card: {
+        default: '#676360ff',
+        _dark: '#c5d4c4ea',
+      },
+      text_new_card: {
+        default: '#464645ff',
+        _dark: '#d4ded3f3',
       },
       muted: {
-        default: '#6b7280',
-        _dark: '#9aa4b2',
+        default: '#6B6B6B',
+        _dark: '#c7cecbb7',
       },
+
+      muted_2: {
+        default: '#6b6b6b9a',
+        _dark: '#b7b8baa8',
+      },
+
       primary: {
-        50: '#eef6ff',
-        100: '#d9eaff',
-        200: '#b7d5ff',
-        300: '#8ebcff',
-        400: '#5b9bff',
-        500: '#2f74ff',
-        600: '#1f5de0',
-        700: '#184ab3',
-        800: '#153f93',
-        900: '#112f69',
+        50: '#f9ccbc7a',           // Durazno
+        100: '#F7B79F',
+        200: '#F19D84',
+        300: '#EC8268',
+        400: '#E6674D',
+        500: '#E04C32',
+        600: '#CC442D',
+        700: '#B03A26',
+        800: '#943020',
+        900: '#78261A',
       },
       success: {
-        50: '#d3f9d8',
-        100: '#b2f2bb',
-        600: '#2f9e44',
+        10: '#c9efe77e',
+        50: '#8DB9AF',           // Verde menta suave
+        100: '#7AAFA3',
+        200: '#69A597',
+        300: '#589C8C',
+        400: '#4B8C7D',
+        500: '#3E7D6E',
+        600: '#366D60',
+        700: '#2E5E52',
+        800: '#264E44',
+        900: '#1E3E36',
       },
-      danger: {
-        50: '#ffe3e3',
-        100: '#ffa8a8',
-        600: '#e03131',
-      },
-      warning: {
-        50: '#fff3bf',
-        100: '#ffd43b',
-        600: '#f08c00',
+      accent: {
+        50: '#4FB7B6',           // Turquesa
+        100: '#45A9A8',
+        200: '#3C9B9A',
+        300: '#338D8C',
+        400: '#2A7F7E',
+        500: '#217170',
+        600: '#1D6362',
+        700: '#185554',
+        800: '#144746',
+        900: '#103938',
       },
     },
   },
+
 }
 
 export const theme = extendTheme({
