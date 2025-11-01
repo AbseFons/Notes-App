@@ -4,12 +4,14 @@ WORKDIR /app/frontend
 
 # Dependencias
 COPY frontend/package*.json ./
-# npm ci es reproducible; si tu lock es viejo, cae a npm install
+
 RUN npm ci || npm install
 
 # Código y build
 COPY frontend .
-RUN npm run build
+
+RUN chmod -R +x node_modules/.bin \
+  && node node_modules/vite/bin/vite.js build
 
 # ---------- STAGE 2: Backend build ----------
 FROM node:20-bullseye-slim AS backend
