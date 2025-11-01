@@ -1,19 +1,36 @@
 # ---------- STAGE 1: Frontend build ----------
-FROM node:20-alpine AS frontend
+FROM node:20-bullseye-slim AS frontend
 WORKDIR /app/frontend
+
+# Dependencias
 COPY frontend/package*.json ./
-RUN npm ci --omit=optional
+# npm ci es reproducible; si tu lock es viejo, cae a npm install
+RUN npm ci || npm install
+
+# Código y build
 COPY frontend .
-# 👇 llama directamente al CLI de Vite
-RUN node node_modules/vite/bin/vite.js build
+RUN npm run build
 
 # ---------- STAGE 2: Backend build ----------
-FROM node:20-alpine AS backend
+FROM node:20-bullseye-slim AS backend
 WORKDIR /app
+ENV NODE_ENV=production
+
+# Prisma suele requerir OpenSSL en runtime
+RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates && rm -rf /var/lib/apt/lists/*
+
+# Dependencias backend
 COPY backend/package*.json ./
-RUN npm ci --omit=optional
+RUN npm ci --omit=dev || npm install --only=prod
+
+# Código backend
 COPY backend .
+
+# Servir el frontend estático desde /public
 COPY --from=frontend /app/frontend/dist ./public
+
+# Generar cliente Prisma
 RUN npx prisma generate || true
+
 EXPOSE 3000
 CMD ["npm", "run", "start:prod"]
