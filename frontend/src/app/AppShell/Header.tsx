@@ -28,6 +28,7 @@ export function Header() {
         base: 'linear(to-b, rgba(0,0,0,0.00), rgba(0,0,0,0.00))',
         _dark: 'linear(to-b, rgba(255,255,255,0.02), rgba(255,255,255,0))',
       }}
+      transition="box-shadow 160ms ease, background-color 160ms ease"
     >
       <Container maxW="10xl" px={{ base: 4, md: 10 }} py={3.5}>
         <Flex align="center" gap={50}>
@@ -44,11 +45,18 @@ export function Header() {
             </Link>
           </HStack>
 
-          <Tabs index={index} onChange={(i) => navigate(i === 0 ? '/' : '/archived')} variant="soft">
+          <Tabs index={index} onChange={(i) => navigate(i === 0 ? '/' : '/archived')} variant="soft" position="relative">
             <TabList>
               <Tab px={6} py={2}>Active</Tab>
               <Tab px={6} py={2}>Archive</Tab>
             </TabList>
+            <TabIndicator
+              mt="-1.5px"
+              height="1.5px"
+              bg="success.50"
+              borderRadius="1px"
+              sx={{ transition: 'all 180ms cubic-bezier(.2,.8,.2,1)' }}
+            />
           </Tabs>
 
           <Spacer />
@@ -62,6 +70,7 @@ export function Header() {
               boxShadow="sm"
               _hover={{ boxShadow: 'md' }}
               leftIcon={<FiPlus />}
+              
             >
               New Note
             </Button>

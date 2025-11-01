@@ -5,6 +5,12 @@ import {
 import { Link } from 'react-router-dom'
 import { relativeTime } from '../api/time'
 import { FiArchive, FiEdit2, FiTrash2 } from 'react-icons/fi'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { updateNote } from '../api/notes'
+import { QuickEditDrawer } from './QuickEditDrawer'
+import type { NoteFormValues } from './NoteForm'
+import { useAppToast } from '../hooks/useAppToast'
+
 
 export interface NoteCardProps {
   id: number
@@ -23,6 +29,17 @@ export function NoteCard(props: NoteCardProps) {
   const hoverBg = useColorModeValue('rgba(0,0,0,0.02)', 'rgba(255,255,255,0.02)')
   const border = '1px solid'
   const borderColor = 'border'
+  const qc = useQueryClient()
+  const toast = useAppToast()
+
+  const save = useMutation({
+    mutationFn: (values: NoteFormValues) => updateNote(id, values),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['notes'] })
+      toast({ status: 'success', title: 'Nota actualizada' })
+    },
+    onError: () => toast({ status: 'error', title: 'No se pudo actualizar la nota' }),
+  })
 
   return (
     <Box
@@ -75,9 +92,11 @@ export function NoteCard(props: NoteCardProps) {
         <Button size={{ base: 'xs', md: 'sm' }} variant="ghost" color="muted_2" leftIcon={<FiArchive />} onClick={onToggleArchive}>
           {archived ? 'Unarchive' : 'Archive'}
         </Button>
-        <Button as={Link} to={`/edit/${id}`} size={{ base: 'xs', md: 'sm' }} variant="ghost" color="muted_2" leftIcon={<FiEdit2 />}>
-          Edit
-        </Button>
+        <QuickEditDrawer
+          triggerAsIcon={false}
+          note={{ id, title, content }}   // agrega tags si las tienes: tags
+          onSave={(values) => save.mutate(values)}
+        />
         <Button
           size={{ base: 'xs', md: 'sm' }}
           variant="ghost"

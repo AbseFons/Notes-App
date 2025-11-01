@@ -2,14 +2,15 @@ import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createNote, getNote, updateNote } from '../api/notes'
-import { Heading, Stack, useToast, Box, Text } from '@chakra-ui/react'
+import { Heading, Stack, Box, Text } from '@chakra-ui/react'
+import { useAppToast } from '../hooks/useAppToast'
 import { NoteForm, NoteFormValues } from '../components/NoteForm'
 
 export default function EditNote({ isNew = false }: { isNew?: boolean }) {
   const { id } = useParams()
   const navigate = useNavigate()
   const qc = useQueryClient()
-  const toast = useToast()
+  const toast = useAppToast()
 
   const { data } = useQuery({
     queryKey: ['note', id],
