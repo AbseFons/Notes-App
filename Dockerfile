@@ -35,4 +35,4 @@ COPY --from=frontend /app/frontend/dist ./public
 RUN npx prisma generate || true
 
 EXPOSE 3000
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start"]
