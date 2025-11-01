@@ -18,30 +18,30 @@ FROM node:20-bullseye-slim AS backend
 WORKDIR /app
 ENV NODE_ENV=production
 
-# Dependencias de sistema (openssl para Prisma)
+# Dependencias de sistema (OpenSSL para Prisma)
 RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates && rm -rf /var/lib/apt/lists/*
 
-# Instalar deps backend
+# 1) Instala dependencias (con dev, porque vamos a compilar)
 COPY backend/package*.json ./
 RUN npm ci || npm install
 
-# Copiar código backend
+# 2) Copia el código
 COPY backend .
 
-# Compilar TypeScript -> dist/
-# (si no tienes script build, usa el fallback con tsc)
-RUN npm run build || npx tsc -p tsconfig.build.json
+# 3) Compila evitando wrappers .bin (Nest o TSC)
+#    - Si tienes Nest CLI como devDependency, intentará primero Nest; si falla, cae a TSC.
+#    - El chmod es defensivo por si algunos .bin no traen +x.
+RUN chmod -R +x node_modules/.bin || true \
+  && (node node_modules/@nestjs/cli/bin/nest.js build || node node_modules/typescript/bin/tsc -p tsconfig.build.json)
 
-# Generar cliente Prisma
+# 4) Genera Prisma client
 RUN npx prisma generate || true
 
-# (Opcional) reducir tamaño: dejar solo deps prod
+# 5) (Opcional) quitar devDependencies para aligerar imagen
 RUN npm prune --omit=dev || true
 
-# Servir frontend estático desde /public (si tu app lo usa)
+# 6) Copia el build del frontend
 COPY --from=frontend /app/frontend/dist ./public
 
 EXPOSE 3000
-
-# Asegúrate de que este script exista o llama node dist/main.js
 CMD ["node", "dist/main.js"]
