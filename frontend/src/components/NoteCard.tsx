@@ -41,7 +41,7 @@ export function NoteCard(props: NoteCardProps) {
         },
       }}
       borderRadius="2xl"
-      minH="200px"
+      minH="220px"
       p={4}
       transition="all 0.15s ease-out"
       boxShadow={{ base: 'sm', _dark: 'none' }}

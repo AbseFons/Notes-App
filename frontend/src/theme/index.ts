@@ -24,12 +24,13 @@ export const foundations = {
     sm: '0 1px 2px rgba(0,0,0,.06)',
     md: '0 4px 12px rgba(0,0,0,.08)',
     lg: '0 10px 24px rgba(0,0,0,.12)',
+    header: '0 6px 16px rgba(0,0,0,.06)',
   },
   semanticTokens: {
     colors: {
       bg: {
-        default: 'rgba(242, 230, 192, 0.35)',       // Amarillo crema 
-        _dark: '#0E1A1B',         
+        default: 'rgba(242, 230, 192, 0.35)',     
+        _dark: '#0E1A1B',
       },
       surface: {
         default: '#ffc48d35',
@@ -40,11 +41,11 @@ export const foundations = {
         _dark: '#4a403a75',
       },
       border: {
-        default: '#c2bda938',       
+        default: '#c2bda938',
         _dark: '#1B1E2A',
       },
       border_2: {
-        default: '#7b786a73',       
+        default: '#7b786a73',
         _dark: '#aeb0b95c',
       },
       text: {
@@ -118,9 +119,15 @@ export const theme = extendTheme({
     Button: ButtonTheme,
     Badge: BadgeTheme,
     Tabs: TabsTheme,
+    Input: { defaultProps: { variant: 'filled', focusBorderColor: 'accent.400', borderRadius: 'lg' } },
+    Textarea: { defaultProps: { variant: 'filled', focusBorderColor: 'accent.400', borderRadius: 'lg' } },
   },
   styles: {
     global: {
+      '*:focus-visible': {
+        outline: 'none',
+        boxShadow: '0 0 0 2px var(--chakra-colors-accent-400)',
+      },
       'html, body, #root': { height: '100%' },
       body: { bg: 'bg', color: 'text' },
     },
