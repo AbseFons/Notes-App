@@ -70,7 +70,7 @@ export function Header() {
               boxShadow="sm"
               _hover={{ boxShadow: 'md' }}
               leftIcon={<FiPlus />}
-              
+
             >
               New Note
             </Button>

@@ -36,9 +36,9 @@ export function NoteCard(props: NoteCardProps) {
     mutationFn: (values: NoteFormValues) => updateNote(id, values),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['notes'] })
-      toast({ status: 'success', title: 'Nota actualizada' })
+      toast({ status: 'success', title: 'Note updated' })
     },
-    onError: () => toast({ status: 'error', title: 'No se pudo actualizar la nota' }),
+    onError: () => toast({ status: 'error', title: 'Failed to update the note.' }),
   })
 
   return (
@@ -94,7 +94,7 @@ export function NoteCard(props: NoteCardProps) {
         </Button>
         <QuickEditDrawer
           triggerAsIcon={false}
-          note={{ id, title, content }}   // agrega tags si las tienes: tags
+          note={{ id, title, content }} 
           onSave={(values) => save.mutate(values)}
         />
         <Button

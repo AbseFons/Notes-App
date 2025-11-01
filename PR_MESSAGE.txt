@@ -1,0 +1,15 @@
+Challenge – Notes (Docker + Swagger + UI)
+
+How to run:
+1) docker compose up -d --build
+2) Frontend: http://localhost:5173
+3) API / Swagger: http://localhost:3000 / http://localhost:3000/api
+
+Highlights:
+- CRUD + archive, text search (q), tag filter (tag)
+- Swagger docs, Prisma ORM, PostgreSQL
+- Chakra UI (dark/light), responsive layout, micro-animations
+- Toasts + confirm delete, quick‑edit drawer
+- One‑command Docker for db/backend/frontend
+
+Details and screenshots in README. Thanks!

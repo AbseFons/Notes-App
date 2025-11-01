@@ -11,10 +11,10 @@ import {
 
 export function ConfirmDialog({
   isOpen,
-  title = '¿Estás segura/o?',
-  description = 'Esta acción no se puede deshacer.',
-  confirmText = 'Confirmar',
-  cancelText = 'Cancelar',
+  title = 'Are you sure?',
+  description = 'This action cannot be undone.',
+  confirmText = 'Confirm',
+  cancelText = 'Cancel',
   onCancel,
   onConfirm,
   isLoading,

@@ -6,9 +6,9 @@ export function EmptyState({ archived }: { archived?: boolean }) {
   return (
     <Center py={16}>
       <VStack spacing={4}>
-        <Heading size="md">{archived ? 'No hay notas archivadas' : 'No hay notas activas'}</Heading>
+        <Heading size="md">{archived ? 'There are no archived notes.' : 'There are no active notes.'}</Heading>
         <Text color="muted">
-          {archived ? 'Cuando archives notas, aparecerán aquí.' : 'Crea tu primera nota para empezar.'}
+          {archived ? 'Once you archive notes, they will appear here.' : 'Create your first note to get started.'}
         </Text>
         {!archived && (
           <Button as={Link} to="/new" variant="primary">
