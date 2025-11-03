@@ -7,12 +7,16 @@ import { SpaController } from './spa.controller';
 import { join } from 'path';
 
 @Module({
-  imports: [ServeStaticModule.forRoot({
-      rootPath: join(process.cwd(), 'public'),
-      exclude: ['/api*'],
-    }),NotesModule, TagsModule],
+  imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'public'), // /app/public en runtime
+      exclude: ['/api*'],                      // no interceptar /api
+    }),
+    NotesModule,
+    TagsModule,
+  ],
+  controllers: [SpaController],               // fallback SPA
   providers: [PrismaService],
-  controllers: [SpaController],
-  exports: [PrismaService]
+  exports: [PrismaService],
 })
 export class AppModule {}
